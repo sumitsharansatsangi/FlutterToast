@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class ToastNoContext extends StatefulWidget {
+  const ToastNoContext({Key? key}) : super(key: key);
+
   @override
-  _ToastNoContextState createState() => _ToastNoContextState();
+  ToastNoContextState createState() => ToastNoContextState();
 }
 
-class _ToastNoContextState extends State<ToastNoContext> {
+class ToastNoContextState extends State<ToastNoContext> {
   void showLongToast() {
     Fluttertoast.showToast(
       msg: "This is Long Toast",
@@ -67,55 +69,55 @@ class _ToastNoContextState extends State<ToastNoContext> {
 
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-      home: new Scaffold(
-        appBar: new AppBar(
-          title: new Text('Flutter Toast'),
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Flutter Toast'),
         ),
-        body: new Center(
-          child: new Column(
+        body: Center(
+          child: Column(
             children: <Widget>[
-              new Padding(
+              Padding(
                 padding: const EdgeInsets.all(10.0),
-                child: new ElevatedButton(
-                    child: new Text('Show Long Toast'),
-                    onPressed: showLongToast),
+                child: ElevatedButton(
+                    onPressed: showLongToast,
+                    child: Text('Show Long Toast')),
               ),
-              new Padding(
+              Padding(
                 padding: const EdgeInsets.all(10.0),
-                child: new ElevatedButton(
-                    child: new Text('Show Short Toast'),
-                    onPressed: showShortToast),
+                child: ElevatedButton(
+                    onPressed: showShortToast,
+                    child: Text('Show Short Toast')),
               ),
-              new Padding(
+              Padding(
                 padding: const EdgeInsets.all(10.0),
-                child: new ElevatedButton(
-                    child: new Text('Show Center Short Toast'),
-                    onPressed: showCenterShortToast),
+                child: ElevatedButton(
+                    onPressed: showCenterShortToast,
+                    child: Text('Show Center Short Toast')),
               ),
-              new Padding(
+              Padding(
                 padding: const EdgeInsets.all(10.0),
-                child: new ElevatedButton(
-                    child: new Text('Show Top Short Toast'),
-                    onPressed: showTopShortToast),
+                child: ElevatedButton(
+                    onPressed: showTopShortToast,
+                    child: Text('Show Top Short Toast')),
               ),
-              new Padding(
+              Padding(
                 padding: const EdgeInsets.all(10.0),
-                child: new ElevatedButton(
-                    child: new Text('Show Colored Toast'),
-                    onPressed: showColoredToast),
+                child: ElevatedButton(
+                    onPressed: showColoredToast,
+                    child: Text('Show Colored Toast')),
               ),
-              new Padding(
+              Padding(
                 padding: const EdgeInsets.all(10.0),
-                child: new ElevatedButton(
-                    child: new Text('Show  Web Colored Toast'),
-                    onPressed: showWebColoredToast),
+                child: ElevatedButton(
+                    onPressed: showWebColoredToast,
+                    child: Text('Show  Web Colored Toast')),
               ),
-              new Padding(
+              Padding(
                 padding: const EdgeInsets.all(10.0),
-                child: new ElevatedButton(
-                  child: new Text('Cancel Toasts'),
+                child: ElevatedButton(
                   onPressed: cancelToast,
+                  child: Text('Cancel Toasts'),
                 ),
               ),
             ],

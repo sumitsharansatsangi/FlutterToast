@@ -5,15 +5,15 @@ homepage: https://github.com/PonnamKarthik/FlutterToast
 issue_tracker: https://github.com/ponnamkarthik/FlutterToast/issues
 
 environment:
-  sdk: '>=2.12.0 <4.0.0'
-  flutter: ">=1.10.0"
+  sdk: '>=3.4.0 <4.0.0'
+  flutter: ">=3.24.0"
 
 dependencies:
   flutter:
     sdk: flutter
   flutter_web_plugins:
     sdk: flutter
-  web: ">=0.5.1 <2.0.0"
+  web: ">=1.0.0 <2.0.0"
 
 flutter:
   plugin:

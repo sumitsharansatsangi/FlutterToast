@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class ToastContext extends StatefulWidget {
+  const ToastContext({Key? key}) : super(key: key);
+
   @override
-  _ToastContextState createState() => _ToastContextState();
+  ToastContextState createState() => ToastContextState();
 }
 
-class _ToastContextState extends State<ToastContext> {
+class ToastContextState extends State<ToastContext> {
   late FToast fToast;
 
   Widget toast = Container(
@@ -43,9 +45,9 @@ class _ToastContextState extends State<ToastContext> {
         toastDuration: Duration(seconds: 2),
         positionedToastBuilder: (context, child) {
           return Positioned(
-            child: child,
             top: 16.0,
             left: 16.0,
+            child: child,
           );
         });
   }
