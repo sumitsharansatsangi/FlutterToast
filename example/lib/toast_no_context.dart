@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class ToastNoContext extends StatefulWidget {
-  const ToastNoContext({Key? key}) : super(key: key);
+  const ToastNoContext({super.key});
 
   @override
   ToastNoContextState createState() => ToastNoContextState();

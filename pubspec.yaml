@@ -5,8 +5,8 @@ homepage: https://github.com/PonnamKarthik/FlutterToast
 issue_tracker: https://github.com/ponnamkarthik/FlutterToast/issues
 
 environment:
-  sdk: '>=3.4.0 <4.0.0'
-  flutter: ">=3.24.0"
+  sdk: '>=3.8.1 <4.0.0'
+  flutter: ">=3.32.0"
 
 dependencies:
   flutter:
@@ -14,6 +14,9 @@ dependencies:
   flutter_web_plugins:
     sdk: flutter
   web: ">=1.0.0 <2.0.0"
+
+dev_dependencies:
+  flutter_lints: ^6.0.0
 
 flutter:
   plugin:

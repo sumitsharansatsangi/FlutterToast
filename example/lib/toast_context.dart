@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class ToastContext extends StatefulWidget {
-  const ToastContext({Key? key}) : super(key: key);
+  const ToastContext({super.key});
 
   @override
   ToastContextState createState() => ToastContextState();
@@ -30,7 +30,7 @@ class ToastContextState extends State<ToastContext> {
     ),
   );
 
-  _showToast() {
+  void _showToast() {
     fToast.showToast(
       child: toast,
       gravity: ToastGravity.BOTTOM,
@@ -38,7 +38,7 @@ class ToastContextState extends State<ToastContext> {
     );
   }
 
-  _showBuilderToast() {
+  void _showBuilderToast() {
     fToast.showToast(
         child: toast,
         gravity: ToastGravity.BOTTOM,
@@ -52,7 +52,7 @@ class ToastContextState extends State<ToastContext> {
         });
   }
 
-  _showToastCancel() {
+  void _showToastCancel() {
     Widget toastWithButton = Container(
       padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0),
       decoration: BoxDecoration(
@@ -90,7 +90,7 @@ class ToastContextState extends State<ToastContext> {
     );
   }
 
-  _queueToasts() {
+  void _queueToasts() {
     fToast.showToast(
       child: toast,
       gravity: ToastGravity.CENTER,
@@ -118,11 +118,11 @@ class ToastContextState extends State<ToastContext> {
     );
   }
 
-  _removeToast() {
+  void _removeToast() {
     fToast.removeCustomToast();
   }
 
-  _removeAllQueuedToasts() {
+  void _removeAllQueuedToasts() {
     fToast.removeQueuedCustomToasts();
   }
 
