@@ -62,10 +62,6 @@ class ToastNoContextState extends State<ToastNoContext> {
     Fluttertoast.cancel();
   }
 
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {

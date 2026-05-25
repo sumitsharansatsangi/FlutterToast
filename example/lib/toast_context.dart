@@ -36,8 +36,8 @@ class ToastContextState extends State<ToastContext> {
     );
   }
 
-  _showCustomPositionMappingToast() {
-    final customPositionMapping = (child, gravity) {
+  void _showCustomPositionMappingToast() {
+    Positioned? customPositionMapping(child, gravity) {
       switch (gravity) {
         case ToastGravity.TOP:
           return Positioned(top: 150.0, left: 24.0, right: 24.0, child: child);
@@ -46,7 +46,7 @@ class ToastContextState extends State<ToastContext> {
         default:
           return null;
       }
-    };
+    }
     fToast.showToast(
       child: Text("This is the custom ToastGravity.BOTTOM"),
       gravity: ToastGravity.BOTTOM,
