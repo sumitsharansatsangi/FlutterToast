@@ -2,7 +2,6 @@ package io.github.ponnamkarthik.toast.fluttertoast
 
 import android.app.Activity
 import android.content.Context
-import android.content.res.AssetManager
 import android.graphics.PorterDuff
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
@@ -12,15 +11,15 @@ import android.view.LayoutInflater
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
-import io.flutter.embedding.engine.FlutterEngine
-import io.flutter.embedding.engine.plugins.FlutterPlugin
-import io.flutter.embedding.engine.loader.FlutterLoader
-import java.io.File
 
-internal class MethodCallHandlerImpl(private var context: Context) : MethodCallHandler {
+internal class MethodCallHandlerImpl(
+    private var context: Context,
+    private val flutterAssets: FlutterPlugin.FlutterAssets,
+) : MethodCallHandler {
 
     private var mToast: Toast? = null
 
@@ -72,9 +71,8 @@ internal class MethodCallHandlerImpl(private var context: Context) : MethodCallH
                     mToast?.duration = mDuration
 
                     if (fontAsset != null) {
-                        val assetManager: AssetManager = context.assets
-                        val key = FlutterLoader().getLookupKeyForAsset(fontAsset)
-                        text.typeface = Typeface.createFromAsset(assetManager, key);
+                        val key = flutterAssets.getAssetFilePathByName(fontAsset)
+                        text.typeface = Typeface.createFromAsset(context.assets, key);
                     }
                     mToast?.view = layout
                 } else {
@@ -88,26 +86,29 @@ internal class MethodCallHandlerImpl(private var context: Context) : MethodCallH
                             textView.setTextColor(textcolor.toInt())
                         }
                         if (fontAsset != null) {
-                            val assetManager: AssetManager = context.assets
-                            val key = FlutterLoader().getLookupKeyForAsset(fontAsset)
-                            textView.typeface = Typeface.createFromAsset(assetManager, key);
+                            val key = flutterAssets.getAssetFilePathByName(fontAsset)
+                            textView.typeface = Typeface.createFromAsset(context.assets, key);
                         }
                     }
                 }
 
-                try {
-                    when (mGravity) {
-                        Gravity.CENTER -> {
-                            mToast?.setGravity(mGravity, 0, 0,)
+                // Only set gravity on custom toasts (with background color)
+                // setGravity() on text toasts causes warnings in Android API 30+
+                if (bgcolor != null) {
+                    try {
+                        when (mGravity) {
+                            Gravity.CENTER -> {
+                                mToast?.setGravity(mGravity, 0, 0,)
+                            }
+                            Gravity.TOP -> {
+                                mToast?.setGravity(mGravity, 0, 100,)
+                            }
+                            else -> {
+                                mToast?.setGravity(mGravity, 0, 100,)
+                            }
                         }
-                        Gravity.TOP -> {
-                            mToast?.setGravity(mGravity, 0, 100,)
-                        }
-                        else -> {
-                            mToast?.setGravity(mGravity, 0, 100,)
-                        }
-                    }
-                } catch (e: Exception,) { }
+                    } catch (e: Exception,) { }
+                }
 
                 if (context is Activity) {
                     (context as Activity).runOnUiThread { mToast?.show() }

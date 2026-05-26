@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -10,8 +11,8 @@ import 'package:flutter/services.dart';
 /// [gravity] is the gravity option for the toast which can be used to determine the position.
 /// The function should return a [Widget] that defines the position of the toast.
 /// If the position is not handled by the custom logic, return `null` to fall back to default logic.
-typedef ToastPositionMapping =
-    Widget? Function(Widget child, ToastGravity? gravity);
+typedef ToastPositionMapping = Widget? Function(
+    Widget child, ToastGravity? gravity);
 
 /// Toast Length
 /// Only for Android Platform
@@ -54,7 +55,7 @@ class Fluttertoast {
   /// Use this method to hide the toast immediately
   static Future<bool?> cancel() async {
     bool? res = await _channel.invokeMethod("cancel");
-    isCurrentlyShowingToast = false; // Update variable
+    isCurrentlyShowingToast = false;  // Update variable
     return res;
   }
 
@@ -95,11 +96,10 @@ class Fluttertoast {
       gravityToast = "bottom";
     }
 
-    //lines from 78 to 97 have been changed in order to solve issue #328
-    if (backgroundColor == null) {
+    if (backgroundColor == null && !kIsWeb && Platform.isIOS) {
       backgroundColor = Colors.black;
     }
-    if (textColor == null) {
+    if (textColor == null && !kIsWeb && Platform.isIOS) {
       textColor = Colors.white;
     }
     final Map<String, dynamic> params = <String, dynamic>{
@@ -107,10 +107,10 @@ class Fluttertoast {
       'length': toast,
       'time': timeInSecForIosWeb,
       'gravity': gravityToast,
-      'bgcolor': backgroundColor.toARGB32(),
-      'iosBgcolor': backgroundColor.toARGB32(),
-      'textcolor': textColor.toARGB32(),
-      'iosTextcolor': textColor.toARGB32(),
+      'bgcolor': backgroundColor?.toARGB32(),
+      'iosBgcolor': backgroundColor?.toARGB32(),
+      'textcolor': textColor?.toARGB32(),
+      'iosTextcolor': textColor?.toARGB32(),
       'fontSize': fontSize,
       'fontAsset': fontAsset,
       'webShowClose': webShowClose,
@@ -118,7 +118,7 @@ class Fluttertoast {
       'webPosition': webPosition,
     };
 
-    isCurrentlyShowingToast = true; // Update variable
+    isCurrentlyShowingToast = true;  // Update variable
 
     bool? res = await _channel.invokeMethod('showToast', params);
 
@@ -132,8 +132,8 @@ class Fluttertoast {
 }
 
 /// Signature for a function to buildCustom Toast
-typedef PositionedToastBuilder =
-    Widget Function(BuildContext context, Widget child);
+typedef PositionedToastBuilder = Widget Function(
+    BuildContext context, Widget child, ToastGravity? gravity);
 
 /// Runs on dart side this has no interaction with the Native Side
 /// Works with all platforms just in two lines of code
@@ -169,7 +169,7 @@ class FToast {
   _showOverlay() {
     if (_overlayQueue.isEmpty) {
       _entry = null;
-      Fluttertoast.isCurrentlyShowingToast = false; // Update variable
+      Fluttertoast.isCurrentlyShowingToast = false;  // Update variable
       return;
     }
     if (context == null) {
@@ -242,7 +242,7 @@ class FToast {
     _overlayQueue.clear();
     _entry?.remove();
     _entry = null;
-    Fluttertoast.isCurrentlyShowingToast = false;
+    Fluttertoast.isCurrentlyShowingToast = false;  // Update variable
   }
 
   /// showToast accepts all the required paramenters and prepares the child
@@ -287,7 +287,7 @@ class FToast {
     OverlayEntry newEntry = OverlayEntry(
       builder: (context) {
         if (positionedToastBuilder != null)
-          return positionedToastBuilder(context, newChild);
+          return positionedToastBuilder(context, newChild, gravity);
         // Use custom mapping logic to fall back to the default mapping if it is not defined or returns null
         if (customPositionMapping != null) {
           Widget? customPosition = customPositionMapping(newChild, gravity);

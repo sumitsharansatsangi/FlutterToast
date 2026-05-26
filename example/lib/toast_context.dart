@@ -37,7 +37,7 @@ class ToastContextState extends State<ToastContext> {
   }
 
   void _showCustomPositionMappingToast() {
-    Positioned? customPositionMapping(child, gravity) {
+    Widget? customPositionMapping(Widget child, ToastGravity? gravity) {
       switch (gravity) {
         case ToastGravity.TOP:
           return Positioned(top: 150.0, left: 24.0, right: 24.0, child: child);
@@ -47,6 +47,7 @@ class ToastContextState extends State<ToastContext> {
           return null;
       }
     }
+
     fToast.showToast(
       child: Text("This is the custom ToastGravity.BOTTOM"),
       gravity: ToastGravity.BOTTOM,
@@ -66,7 +67,7 @@ class ToastContextState extends State<ToastContext> {
       child: toast,
       gravity: ToastGravity.BOTTOM,
       toastDuration: Duration(seconds: 2),
-      positionedToastBuilder: (context, child) {
+      positionedToastBuilder: (context, child, gravity) {
         return Positioned(top: 16.0, left: 16.0, child: child);
       },
     );
@@ -155,7 +156,6 @@ class ToastContextState extends State<ToastContext> {
       appBar: AppBar(title: Text("Custom Toasts")),
       body: Center(
         child: Column(
-          spacing: 24.0,
           children: [
             ElevatedButton(
               child: Text("Show Custom Toast"),
@@ -163,37 +163,42 @@ class ToastContextState extends State<ToastContext> {
                 _showToast();
               },
             ),
-
+            SizedBox(height: 24.0),
             ElevatedButton(
               child: Text("Show Custom Toast via PositionedToastBuilder"),
               onPressed: () {
                 _showBuilderToast();
               },
             ),
+            SizedBox(height: 8.0),
             ElevatedButton(
               child: Text("Show Custom Toast via CustomPositionMapping"),
               onPressed: () {
                 _showCustomPositionMappingToast();
               },
             ),
+            SizedBox(height: 8.0),
             ElevatedButton(
               child: Text("Custom Toast With Close Button"),
               onPressed: () {
                 _showToastCancel();
               },
             ),
+            SizedBox(height: 8.0),
             ElevatedButton(
               child: Text("Queue Toasts"),
               onPressed: () {
                 _queueToasts();
               },
             ),
+            SizedBox(height: 8.0),
             ElevatedButton(
               child: Text("Cancel Toast"),
               onPressed: () {
                 _removeToast();
               },
             ),
+            SizedBox(height: 8.0),
             ElevatedButton(
               child: Text("Remove Queued Toasts"),
               onPressed: () {
