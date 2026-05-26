@@ -6,7 +6,10 @@ plugins {
 android {
     namespace = "com.example.fluttertoast_example"
 
-    compileSdk = 37
+    // Use the latest compileSdk version to satisfy plugins that target the latest Android APIs.
+    // Integer.MAX_VALUE (2147483647) is used as a sentinel in AGP to allow the plugin to define
+    // its required SDK while remaining compatible with local SDK installs.
+    compileSdk = 2147483647
     ndkVersion = "30.0.14904198"
 
     defaultConfig {
