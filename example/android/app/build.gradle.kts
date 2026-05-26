@@ -29,12 +29,6 @@ android {
             signingConfig = signingConfigs.getByName("debug")
         }
     }
-
-    sourceSets {
-        getByName("main") {
-            kotlin.srcDirs("src/main/kotlin")
-        }
-    }
 }
 
 kotlin {
